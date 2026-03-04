@@ -2,7 +2,7 @@
 #define TESTFUN_HPP
 #include <iostream>
 
-template < class T >
+template< class T >
 struct SumM {
   size_t total = 0;
   void operator()(const T& val) {
@@ -10,7 +10,7 @@ struct SumM {
   }
 };
 
-template < class T >
+template< class T >
 struct PrintM {
   void operator()(const T& val) {
     std::cout << val << " ";

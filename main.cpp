@@ -19,6 +19,6 @@ int main()
   std::cout << "Sum of elements: " << s.total << "\n";
 
   clear(list->next, list);
-  delete list;
+  destroy_sent(list);
   return 0;
 }

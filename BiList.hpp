@@ -11,15 +11,15 @@ struct BiList {
 
 template< class T >
 BiList<T>* create() {
-  BiList<T>* sent = new BiList<T>;
-  sent->next = sent;
-  sent->prev = sent;
-  return sent;
+  BiList<T>* r = static_cast<BiList<T>*>(::operator new(sizeof(BiList<T>)));
+  r->next = r;
+  r->prev = r;
+  return r;
 }
 
 template< class T >
 BiList<T>* add(BiList<T>* h, const T& d) {
-  BiList<T>* newNode = new BiList<T>{d};
+  BiList<T>* newN = new BiList<T>{d};
   newN->next = h;
   newN->prev = h->prev;
   h->prev->next = newN;
@@ -57,6 +57,11 @@ BiList<T>* clear(BiList<T>* b, BiList<T>* e) noexcept {
     b = cut(b);
   }
   return e;
+}
+
+template< class T >
+void destroy_sent(BiList<T>* h) noexcept {
+  ::operator delete(h);
 }
 
 template< class T, class F >
