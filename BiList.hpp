@@ -31,3 +31,49 @@ template< class T >
 BiList<T>* insert(BiList<T>* h, const T& d) {
     return add(h->next, d);
 }
+
+template< class T >
+BiList<T>* cut(BiList<T>* h) noexcept {
+  if (h->next == h) {
+    return h;
+  }
+  BiList<T>* nextN = h->next;
+  BiList<T>* prevN = h->prev;
+  prevN->next = nextN;
+  nextN->prev = prevN;
+  delete h;
+  return nextN;
+}
+
+template< class T >
+BiList<T>* erase(BiList<T>* h) noexcept {
+  if (h->next == h) return h;
+  return cut(h->next);
+}
+
+template< class T >
+BiList<T>* clear(BiList<T>* b, BiList<T>* e) noexcept {
+  while (b != e) {
+    b = cut(b);
+  }
+  return e;
+}
+
+template< class T, class F >
+F traverse(F f, BiList<T>* b, BiList<T>* e) {
+  for (BiList<T>* curr = b; curr != e; curr = curr->next) {
+    f(curr->data);
+  }
+  return f;
+}
+
+template< class T >
+BiList<T>* convert(const T* arr, size_t size) {
+  BiList<T>* sent = create<T>();
+  for (size_t i = 0; i < size; ++i) {
+    add(sent, arr[i]);
+  }
+  return sent;
+}
+
+#endif
